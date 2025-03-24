@@ -1,0 +1,22 @@
+- name: stop, remove web
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: Rocky > stop httpd
+      service: name=httpd state=stopped
+      when: ansible_distribution == 'Rocky'
+
+    - name: Rocky > remove httpd
+      action: "{{ansible_pkg_mgr}} name=httpd state=absent"
+      when: ansible_distribution == 'Rocky'
+
+    - name: Ubunt > stop nginx
+      service: name=nginx state=stopped
+      when: ansible_distribution == 'Ubuntu'
+
+    - name: Ubunt > remove nginx
+      action: "{{ansible_pkg_mgr}} name=nginx state=absent purge=yes"
+      when: ansible_distribution == 'Ubuntu'
+
