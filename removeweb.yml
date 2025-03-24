@@ -17,6 +17,6 @@
       when: ansible_distribution == 'Ubuntu'
 
     - name: Ubunt > remove nginx
-      action: "{{ansible_pkg_mgr}} name=nginx state=absent purge=yes"
+      action: "{{ansible_pkg_mgr}} name=nginx state=absent autoremove=yes purge=yes"
       when: ansible_distribution == 'Ubuntu'
 
