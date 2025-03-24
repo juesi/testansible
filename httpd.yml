@@ -1,0 +1,20 @@
+- name: httpd 포트변경
+  hosts: all
+  become: yes
+  vars_files:
+    vars.yml
+
+  tasks:
+    - name: 포트변경하기
+      lineinfile:
+        dest: /etc/httpd/conf/httpd.conf
+        regexp: '^Listen'
+        line: Listen {{ pot }}
+      notify:
+        - httpd restart
+
+  handlers:
+    - name: httpd restart
+      service:
+        name: httpd
+        state: restarted
